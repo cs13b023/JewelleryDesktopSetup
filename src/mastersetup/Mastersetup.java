@@ -16,7 +16,7 @@ import java.sql.*;
 public class Mastersetup {
    // JDBC driver name and database URL
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-   static final String DB_URL = "jdbc:mysql://localhost/t2";
+   static final String DB_URL = "jdbc:mysql://localhost/test";
 
    //  Database credentials
    static final String USER = "root";
@@ -42,8 +42,8 @@ public class Mastersetup {
       stmt.executeUpdate(sql);
       sql="CREATE TABLE chitfundcustomerdetails(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,customerid INT(5),chitfundid INT(4),Dueamount INT(10),amonttaken INT(10),datetaken DATE)";
       stmt.executeUpdate(sql);
-      sql="CREATE TABLE payments(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,customerid INT(4),chitfundid INT(4),amountpaid INT(7),givendate DATE)";
-      //stmt.executeUpdate(sql);
+      sql="CREATE TABLE payments(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,invoiceid INT(4),amount INT(10),dateofpayment DATE,paymentmode VARCHAR(10),interestcut INT(10),principalcut INT(10))";
+      stmt.executeUpdate(sql);
       sql="CREATE TABLE chitspartof(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,name VARCHAR(20),totalmembers int(3),totalmonths INT(2),totalamount INT(10),installmentscompleted INT(2),pooledmoney INT(10),startdate date,manager varchar(20))";
       stmt.executeUpdate(sql);
       sql="CREATE TABLE paymentspartof(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,chitfundid INT(4),amountpaid INT(7),givendate DATE)";
@@ -147,8 +147,6 @@ public class Mastersetup {
       sql="CREATE TABLE invoice(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,customer VARCHAR(20),amount INT(10),interestrate FLOAT,dateoflending DATE,paymentmode varchar(20),description varchar(100),interest INT(10),payable INT(10),last_paid DATE,principal INT(10),last_interest_added DATE)";
       stmt.executeUpdate(sql);
 
-      sql="CREATE TABLE payments(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,invoiceid INT(4),amount INT(10),dateofpayment DATE,paymentmode VARCHAR(10),interestcut INT(10),principalcut INT(10))";
-      stmt.executeUpdate(sql);
       sql="ALTER TABLE payments ADD CONSTRAINT fk_customerpaymentid FOREIGN KEY (invoiceid) REFERENCES invoice(id)";
       stmt.executeUpdate(sql);
       sql="ALTER TABLE items ADD CONSTRAINT fk_customeritemid FOREIGN KEY (invoiceid) REFERENCES invoice(id)";
